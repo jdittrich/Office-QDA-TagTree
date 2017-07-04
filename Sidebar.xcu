@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<oor:component-data
+	oor:name="Sidebar"
+    oor:package="org.openoffice.Office.UI"
+	xmlns:install="http://openoffice.org/2004/installation"
+	xmlns:oor="http://openoffice.org/2001/registry"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <node oor:name="Content">
+		<node oor:name="DeckList">
+	
+			<node oor:name="ExampleSidebarDeck" oor:op="replace">
+	    	    <prop oor:name="Title" oor:type="xs:string">
+            	   	<value xml:lang="en-US">My New Deck</value>
+	            </prop>
+	            <prop oor:name="TitleBarIsOptional" oor:type="xs:boolean">
+			        <value>true</value>
+			    </prop>
+	            <prop oor:name="Id" oor:type="xs:string">
+	               	<value>MyDeck1</value>
+	            </prop>
+	            <prop oor:name="IconURL" oor:type="xs:string">
+	               	<value>vnd.sun.star.extension://tagtree.qdaaddon.de.fordes.QDAHelper/image/icon.png</value>
+	            </prop>				
+		       	<prop oor:name="ContextList">
+	           		<value oor:separator=";">
+	           			Writer, any, visible ;
+	               	</value>
+	           	</prop>
+	       	</node>
+	    </node>
+    	<node oor:name="PanelList">
+        	
+        	﻿
+            <node oor:name="Panel_Panel1" oor:op="replace">
+	        	<prop oor:name="Title" oor:type="xs:string">
+                	<value xml:lang="en-US">Tag Tree</value>
+            	</prop>
+            	<prop oor:name="Id" oor:type="xs:string">
+                	<value>Panel_tagtree0001</value>
+            	</prop>
+            	<prop oor:name="DeckId" oor:type="xs:string">
+                	<value>MyDeck1</value>
+            	</prop>
+            	<prop oor:name="ContextList">
+            		<value oor:separator=";">
+            			Writer, any, visible;
+                	</value>
+            	</prop>
+            	<prop oor:name="ImplementationURL" oor:type="xs:string">
+            		<value>private:resource/toolpanel/QDAHelper/Panel1</value>
+            	</prop>				
+            	<prop oor:name="OrderIndex" oor:type="xs:int">
+            		<value>700</value>
+            	</prop>
+            	<prop oor:name="WantsCanvas" oor:type="xs:boolean">
+            		<value>false</value>
+            	</prop>
+            	<prop oor:name="DefaultMenuCommand">
+          			<value>tagtree.qdaaddon.de.fordes:Panel1</value>
+        		</prop>
+            </node>
+
+
+
+    	</node>
+    </node>
+</oor:component-data>
