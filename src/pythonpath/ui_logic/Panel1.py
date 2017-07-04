@@ -12,6 +12,16 @@ from com.sun.star.awt.MessageBoxButtons import BUTTONS_OK, BUTTONS_OK_CANCEL, BU
 from com.sun.star.awt.MessageBoxButtons import DEFAULT_BUTTON_OK, DEFAULT_BUTTON_CANCEL, DEFAULT_BUTTON_RETRY, DEFAULT_BUTTON_YES, DEFAULT_BUTTON_NO, DEFAULT_BUTTON_IGNORE
 from com.sun.star.awt.MessageBoxType import MESSAGEBOX, INFOBOX, WARNINGBOX, ERRORBOX, QUERYBOX
 
+from com.sun.star.awt import XActionListener
+
+from com.sun.star.view import XSelectionChangeListener
+from com.sun.star.view import XSelectionSupplier
+from com.sun.star.view.SelectionType import SINGLE
+
+from functools import reduce
+
+import re
+
 from ui.Panel1_UI import Panel1_UI
 
 # ----------------- helpers for API_inspector tools -----------------
@@ -35,7 +45,7 @@ from ui.Panel1_UI import Panel1_UI
 #        raise _rtex("\nBasic library Xray is not installed", uno.getComponentContext())
 
 
-class Panel1(Panel1_UI):
+class Panel1(Panel1_UI,XActionListener, XSelectionChangeListener):
     '''
     Class documentation...
     '''
@@ -55,9 +65,44 @@ class Panel1(Panel1_UI):
     # mri(self.LocalContext, self.DialogContainer)
     # xray(self.DialogContainer)
 
-    def myFunction(self):
-        # TODO: not implemented
-        pass
+    def updateTree(self): #why is self implicitly passed?
+        def convertAbstractToUiTree(abstractTree,parent,gui_treemodel):
+            for item in abstractTree: #TODO: Item is sometimes the string "children"
+                
+                if "children" in item and item["children"]:
+                    branch = treemodel.createNode(item['name'], True) 
+                else:
+                    branch = treemodel.createNode(item['name'], False) 
+               
+                if "children" in item and item["children"]: #"in" checks for keys existance, "item["children"]"" checks if list is emptry since an empty list is false (https://www.python.org/dev/peps/pep-0008/#programming-recommendations)
+                    convertAbstractToUiTree(item["children"],branch, gui_treemodel)
+                    
+                if "data" in item:
+                    branch.DataValue = item["data"]["origAnnotation"]
+                parent.appendChild(branch)
+        
+        document = XSCRIPTCONTEXT.getDocument()
+        treeControl = self.DialogContainer.getControl('TreeControl1')
+        commentslist = collectHashtaggedComments(document)
+        abstractTree = constructTree(commentslist)
+        sortTreeRecursive(abstractTree) #inplace sort
+
+        treemodel = self.ServiceManager.createInstance("com.sun.star.awt.tree.MutableTreeDataModel")
+
+        rootnode = treemodel.createNode("root",True)
+        treemodel.setRoot(rootnode)
+
+        convertAbstractToUiTree(abstractTree, rootnode, treemodel)
+
+        # so seemingly, the dialog is created just via models. To get the views/controlers we need to call the getControl.
+        # To add to the irritation, there is the tree model (model of the control element) and the tree data model (model of what the control element shows)
+        treeControl.addSelectionChangeListener(self)
+        
+        self.TreeControl1.DataModel = treemodel
+
+        # the variable single has been imported by "from com.sun.star.view.SelectionType import SINGLE". Just "SINGLE" (as string) or the corrseponding enumeration number did not work.
+        self.TreeControl1.SelectionType = SINGLE
+        self.TreeControl1.RootDisplayed = False
 
     # --------- helpers ---------------------
 
@@ -81,12 +126,146 @@ class Panel1(Panel1_UI):
     # -----------------------------------------------------------
 
 
-    def CommandButton1_OnClick(self):
-        self.DialogModel.Title = "It's Alive! - CommandButton1"
-        self.messageBox("It's Alive! - CommandButton1", "Event: OnClick", INFOBOX)
-        # TODO: not implemented
+    def actionPerformed(self, oActionEvent):
+        if oActionEvent.ActionCommand == 'updateButton_OnClick':
+            self.updateButton_OnClick()
+
+    def updateButton_OnClick(self):
+        self.updateTree()
+#         self.DialogModel.Title = "It's Alive! - updateButton"
+#         self.messageBox("It's Alive! - updateButton", "Event: OnClick", INFOBOX)
+        
+    def selectionChanged(self, ev):
+        selection = ev.Source.getSelection().DataValue #get id of item
+        self.selection = selection
+        self.textOfTag.Text = selection.getAnchor().getString()
+        #mri(self.LocalContext, XSCRIPTCONTEXT.getDocument())
+        
+        if self.CheckboxJumpto.State == True:
+            scrollToRange(XSCRIPTCONTEXT.getDocument(), selection.getAnchor())
 
 
+#--------------------------------------------
+
+def scrollToRange(document, range): #range is a section in a text
+
+    #DOES: scrolls the document to the range in a given text
+    #ARGUMENTS: a document and a range object. The range must be in the document
+    #RETURNS: nothing (is a side effect function, see DOES)
+
+    viewCursor = document.CurrentController.getViewCursor()
+    viewCursor.gotoRange(range,False)
+    viewCursor.collapseToEnd() #if not collapsed, the whole range is marked and is easily accidental overwritten with an accidental keystroke
+
+def collectHashtaggedComments(document):
+    
+    # DOES: Collect all comments ("Annotations") that match a regex in an array
+    # GETs: A document
+    # RETURNs: List of comments ("Annotations")
+
+    findHashtagsRegex = re.compile('#\S+') #This regex needs to match for a comment to be included in the returned list. It is: a "#", followed by any non-whitespace, followed by word boundary
+
+    textfields = document.getTextFields()
+
+    matchedComments = [] #will hold array with comments and their metadata
+    counter=0;#counter for providing a locally unique id
+
+    for currentField in textfields:
+            if currentField.supportsService("com.sun.star.text.TextField.Annotation"): #is this an annotation aka comment?
+
+                #to list/array
+                #write to var
+                if findHashtagsRegex.search(currentField.Content): # only do, if a hashtag is in the comment
+                    tagListStrings = findHashtagsRegex.findall(currentField.Content) #the tags in the comment field
+                    markedText = currentField.getAnchor().getString() # the text to which the comment refers
+                    tagList =[] #to be filled with the split strings (=list of strings) from tagListStrings
+
+                    for string in tagListStrings: #TODO: there is probably a more elegant way
+                        tagList.append(string[1:].split("#")) #remove first character. If the first character would be a # it would create an empty string when split in this place
+
+                    annotationInfo =    {
+                                        'name':markedText,
+                                        'paths':tagList,
+                                        'data':{
+                                            'id':counter,
+                                            'origAnnotation':currentField,
+                                            'markedText':markedText,
+                                            'content':currentField.Content,
+                                            }
+                                        } # create hashtable with infos to use late
+
+                    counter = counter +1; # this probably could be done better.
+
+                    # jumpt to da point
+                    matchedComments.append(annotationInfo)
+    return matchedComments
+
+def constructTree(commentsArray):
+    '''
+    DOES: Create a nested tree from a flat list 
+    GETs: A list with items having name (string), paths (list of paths each being a list composed of path parts), data (a dict with what you like – it’s payload)
+    RETURNS: a tree like this
+    
+    - A
+     * Children:
+      - B
+       * children:
+        - D
+        - E
+      - C
+    …
+    So it is lists of dicts. One property is "children", in which there is another list of dicts etc.
+    '''
+    
+    #TODO: Fix "array" name to "list"  
+    
+    result = []
+
+    initialValue = {
+        0:result
+    }
+
+    for comment in commentsArray:
+        for path in comment["paths"]:
+            #pydevd.settrace()
+            def reducerfunction(accumulator,pathpart): #function defined here so I can access the current comment in the reducer function
+                #print("cmmt", comment, "-- -- - -path",path, "- - - pathpart", pathpart)
+                if not pathpart in accumulator:
+                    accumulator[pathpart] = {
+                        0:[]
+                    }
+
+                    elementToAppend = {
+                        "name":pathpart,
+                        "children":accumulator[pathpart][0]
+                    }
+
+                    if pathpart == comment["name"] and "data" in comment:
+                        elementToAppend["data"] = comment["data"]
+
+                    accumulator[0].append(elementToAppend)
+                return accumulator[pathpart]
+
+            reduce(reducerfunction,path+[comment["name"]],initialValue)
+
+    return result
+
+
+
+def sortTreeRecursive(treeList):
+    ''' 
+    DOES: Sort children lists in a tree by name
+    GET: Tree
+    RETURN: Nothing
+    '''
+    for item in treeList:
+        if "children" in item:
+            sortTreeRecursive(item["children"])
+    treeList.sort(key=lambda item:item["name"])
+
+#----------------#
+#-- RUN PANEL----#
+#----------------#
 
 def Run_Panel1(*args):
     """
