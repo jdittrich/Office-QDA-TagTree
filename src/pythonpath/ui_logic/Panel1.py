@@ -80,8 +80,10 @@ class Panel1(Panel1_UI,XActionListener, XSelectionChangeListener):
                 if "data" in item:
                     branch.DataValue = item["data"]["origAnnotation"]
                 parent.appendChild(branch)
+
         
-        document = XSCRIPTCONTEXT.getDocument()
+        document = self.document
+
         treeControl = self.DialogContainer.getControl('TreeControl1')
         commentslist = collectHashtaggedComments(document)
         abstractTree = constructTree(commentslist)

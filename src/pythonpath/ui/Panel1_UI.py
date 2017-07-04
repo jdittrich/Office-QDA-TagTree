@@ -33,7 +33,9 @@ class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
         # -----------------------------------------------------------
 
         # --------------create dialog container and set model and properties
-        self.DialogContainer = self.ServiceManager.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", self.LocalContext)
+        #self.DialogContainer = self.ServiceManager.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", self.LocalContext)
+        
+        self.DialogContainer = panelWin
         self.DialogModel = self.ServiceManager.createInstance("com.sun.star.awt.UnoControlDialogModel")
         self.DialogContainer.setModel(self.DialogModel)
         self.DialogModel.Moveable = True
@@ -106,8 +108,8 @@ class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
 
         # inserts the control model into the dialog model
         self.DialogModel.insertByName("TreeControl1", self.TreeControl1)
-        
-        self.updateTree()
+
+        #self.updateTree()
 
     # -----------------------------------------------------------
     #               Action events

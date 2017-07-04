@@ -64,7 +64,7 @@ class ElementFactory( unohelper.Base, XUIElementFactory):
         self.ctx = ctx
 
     def createUIElement(self, url, args):
-
+        
         try:
             xParentWindow = None
             xFrame = None
@@ -114,7 +114,7 @@ class XUIPanel( unohelper.Base,  XSidebarPanel, XUIElement, XToolPanel, XCompone
 
     # XUIElement
     def getRealInterface(self):
-
+        
         if not self.window:
             dialogUrl = "vnd.sun.star.extension://tagtree.qdaaddon.de.fordes.QDAHelper/empty_dialog.xdl"
             smgr = self.ctx.ServiceManager
