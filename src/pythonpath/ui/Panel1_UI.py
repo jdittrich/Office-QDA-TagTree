@@ -26,9 +26,6 @@ class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
     """
     def __init__(self, panelWin):
         
-        import sys;sys.path.append(r'/media/jan/kram-linux/applications/eclipse/dropins/plugins/org.python.pydev_5.5.0.201701191708/pysrc')
-        import pydevd;pydevd.settrace()
-        
         self.LocalContext = uno.getComponentContext()
         self.ServiceManager = self.LocalContext.ServiceManager
         self.Toolkit = self.ServiceManager.createInstanceWithContext("com.sun.star.awt.ExtToolkit", self.LocalContext)
