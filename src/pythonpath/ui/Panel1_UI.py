@@ -20,10 +20,15 @@ from com.sun.star.task import XJobExecutor
 
 
 class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
+
     """
     Class documentation...
     """
     def __init__(self, panelWin):
+        
+        import sys;sys.path.append(r'/media/jan/kram-linux/applications/eclipse/dropins/plugins/org.python.pydev_5.5.0.201701191708/pysrc')
+        import pydevd;pydevd.settrace()
+        
         self.LocalContext = uno.getComponentContext()
         self.ServiceManager = self.LocalContext.ServiceManager
         self.Toolkit = self.ServiceManager.createInstanceWithContext("com.sun.star.awt.ExtToolkit", self.LocalContext)
@@ -33,7 +38,7 @@ class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
         # -----------------------------------------------------------
 
         # --------------create dialog container and set model and properties
-        #self.DialogContainer = self.ServiceManager.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", self.LocalContext)
+        # self.DialogContainer = self.ServiceManager.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", self.LocalContext)
         
         self.DialogContainer = panelWin
         self.DialogModel = self.ServiceManager.createInstance("com.sun.star.awt.UnoControlDialogModel")
@@ -43,7 +48,7 @@ class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
         self.DialogModel.Height = 350
         self.DialogModel.PositionX = "176"
         self.DialogModel.Closeable = True
-        self.DialogModel.Name = "TagTreeDialog"
+        self.DialogModel.Name = "Dialog1" #change back to tree dialog and see if it works
         self.DialogModel.Width = 163
 
 
@@ -97,7 +102,8 @@ class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
 
         # --------- create an instance of .tree.TreeControl control, set properties ---
         self.TreeControl1 = self.DialogModel.createInstance("com.sun.star.awt.tree.TreeControlModel")
-        # self.TreeControl1 = self.DialogModel.createInstance("com.sun.star.awt.tree.TreeControl")
+        
+	# self.TreeControl1 = self.DialogModel.createInstance("com.sun.star.awt.tree.TreeControl")
 
         self.TreeControl1.PositionY = "80"
         self.TreeControl1.Name = "TreeControl1"
@@ -110,6 +116,8 @@ class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
         self.DialogModel.insertByName("TreeControl1", self.TreeControl1)
 
         #self.updateTree()
+        
+
 
     # -----------------------------------------------------------
     #               Action events

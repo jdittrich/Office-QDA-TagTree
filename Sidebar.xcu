@@ -20,7 +20,7 @@
 	               	<value>MyDeck1</value>
 	            </prop>
 	            <prop oor:name="IconURL" oor:type="xs:string">
-	               	<value>vnd.sun.star.extension://tagtree.qdaaddon.de.fordes.QDAHelper/image/icon.png</value>
+	               	<value>vnd.sun.star.extension://tagtree.qdaaddon.de.fordes.qdatreehelper/image/icon.png</value>
 	            </prop>				
 		       	<prop oor:name="ContextList">
 	           		<value oor:separator=";">
@@ -48,7 +48,7 @@
                 	</value>
             	</prop>
             	<prop oor:name="ImplementationURL" oor:type="xs:string">
-            		<value>private:resource/toolpanel/QDAHelper/Panel1</value>
+            		<value>private:resource/toolpanel/qdatreehelper/Panel1</value>
             	</prop>				
             	<prop oor:name="OrderIndex" oor:type="xs:int">
             		<value>700</value>

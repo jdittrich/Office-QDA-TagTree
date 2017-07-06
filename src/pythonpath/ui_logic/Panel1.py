@@ -49,6 +49,7 @@ class Panel1(Panel1_UI,XActionListener, XSelectionChangeListener):
     '''
     Class documentation...
     '''
+    
     def __init__(self, panelWin):
         Panel1_UI.__init__(self, panelWin)
 

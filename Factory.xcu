@@ -13,13 +13,13 @@
                     <value>toolpanel</value>
                 </prop>
                 <prop oor:name="Name">
-                    <value>QDAHelper</value>
+                    <value>qdatreehelper</value>
                 </prop>
                 <prop oor:name="Module">
                     <value/>
                 </prop>
                 <prop oor:name="FactoryImplementation">
-                    <value>tagtree.qdaaddon.de.fordes.QDAHelper</value>
+                    <value>tagtree.qdaaddon.de.fordes.qdatreehelper</value>
                 </prop>
             </node>
             

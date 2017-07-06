@@ -22,8 +22,6 @@ from com.sun.star.ui.UIElementType import TOOLPANEL as UET_TOOLPANEL
 
 from ui_logic.Panel1 import Panel1
 
-
-
 # ----------------- helpers for API_inspector tools -----------------
 
 # uncomment for MRI
@@ -64,7 +62,8 @@ class ElementFactory( unohelper.Base, XUIElementFactory):
         self.ctx = ctx
 
     def createUIElement(self, url, args):
-        
+        import sys;sys.path.append(r'/media/jan/kram-linux/applications/eclipse/dropins/plugins/org.python.pydev_5.5.0.201701191708/pysrc')
+        import pydevd;pydevd.settrace()
         try:
             xParentWindow = None
             xFrame = None
@@ -99,7 +98,7 @@ class ElementFactory( unohelper.Base, XUIElementFactory):
 g_ImplementationHelper = unohelper.ImplementationHelper()
 g_ImplementationHelper.addImplementation(
         ElementFactory,
-        "tagtree.qdaaddon.de.fordes.QDAHelper",
+        "tagtree.qdaaddon.de.fordes.qdatreehelper",
         ("com.sun.star.task.Job",),)
 
 
@@ -114,9 +113,11 @@ class XUIPanel( unohelper.Base,  XSidebarPanel, XUIElement, XToolPanel, XCompone
 
     # XUIElement
     def getRealInterface(self):
+        import sys;sys.path.append(r'/media/jan/kram-linux/applications/eclipse/dropins/plugins/org.python.pydev_5.5.0.201701191708/pysrc')
+        import pydevd;pydevd.settrace()
         
         if not self.window:
-            dialogUrl = "vnd.sun.star.extension://tagtree.qdaaddon.de.fordes.QDAHelper/empty_dialog.xdl"
+            dialogUrl = "vnd.sun.star.extension://tagtree.qdaaddon.de.fordes.qdatreehelper/empty_dialog.xdl"
             smgr = self.ctx.ServiceManager
 
             provider = smgr.createInstanceWithContext("com.sun.star.awt.ContainerWindowProvider", self.ctx)
@@ -211,11 +212,13 @@ def showPanels(panelWin, url):
     Create a new panel object when the sidebar is initialized
     or whenever a panel becomes visible
     """
-
+    import sys;sys.path.append(r'/media/jan/kram-linux/applications/eclipse/dropins/plugins/org.python.pydev_5.5.0.201701191708/pysrc')
+    import pydevd;pydevd.settrace()
+    
     ctx = uno.getComponentContext()
     # url is set in Sidebar.xcu
-    if url == 'private:resource/toolpanel/QDAHelper/Panel1':
-
+    if url == 'private:resource/toolpanel/qdatreehelper/Panel1':
+        
         pos_y = 20
 
         app = Panel1(panelWin)
