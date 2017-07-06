@@ -145,7 +145,7 @@ class Panel1(Panel1_UI,XActionListener, XSelectionChangeListener):
         #mri(self.LocalContext, XSCRIPTCONTEXT.getDocument())
         
         if self.CheckboxJumpto.State == True:
-            scrollToRange(XSCRIPTCONTEXT.getDocument(), selection.getAnchor())
+            scrollToRange(self.document, selection.getAnchor())
 
 
 #--------------------------------------------
@@ -155,7 +155,7 @@ def scrollToRange(document, range): #range is a section in a text
     #DOES: scrolls the document to the range in a given text
     #ARGUMENTS: a document and a range object. The range must be in the document
     #RETURNS: nothing (is a side effect function, see DOES)
-
+    
     viewCursor = document.CurrentController.getViewCursor()
     viewCursor.gotoRange(range,False)
     viewCursor.collapseToEnd() #if not collapsed, the whole range is marked and is easily accidental overwritten with an accidental keystroke
