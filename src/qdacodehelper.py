@@ -20,7 +20,7 @@ from com.sun.star.ui import XUIElement, XToolPanel,XSidebarPanel, LayoutSize
 from com.sun.star.frame import XDispatch,XDispatchProvider
 from com.sun.star.ui.UIElementType import TOOLPANEL as UET_TOOLPANEL
 
-from ui_logic.Panel1 import Panel1
+from ui_logic.qdaTreePanel import qdaTreePanel
 
 # ----------------- helpers for API_inspector tools -----------------
 
@@ -197,7 +197,7 @@ class test(unohelper.Base, XDispatch, XDispatchProvider):
         the "More Options" button in the panel title bar
         """
 
-        if featureURL.Path == 'Panel1':
+        if featureURL.Path == 'qdaTreePanel':
             #TODO minor: put message into central object instead of code
             messageBox("Helper for qualitative Research in LibreOffice. Generates a list/tree of #hashtags#subhashtags in comments which can serve as codes and/or markers for memos", 'DefaultMenuCommand', MsgType=MESSAGEBOX, MsgButtons=BUTTONS_OK)
             # messageBox(featureURL.Path, 'DefaultMenuCommand', MsgType=MESSAGEBOX, MsgButtons=BUTTONS_OK)
@@ -215,11 +215,11 @@ def showPanels(panelWin, url):
     
     ctx = uno.getComponentContext()
     # url is set in Sidebar.xcu
-    if url == 'private:resource/toolpanel/qdatreehelper/Panel1':
+    if url == 'private:resource/toolpanel/qdatreehelper/qdaTreePanel':
         
         pos_y = 20
 
-        app = Panel1(panelWin)
+        app = qdaTreePanel(panelWin)
         app.showDialog()
         panel_height = app.getHeight()
 

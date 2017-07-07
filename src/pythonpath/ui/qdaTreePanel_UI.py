@@ -19,7 +19,7 @@ from com.sun.star.awt import XActionListener
 from com.sun.star.task import XJobExecutor
 
 
-class Panel1_UI(unohelper.Base, XActionListener, XJobExecutor):
+class qdaTreePanel_UI(unohelper.Base, XActionListener, XJobExecutor):
 
     """
     Class documentation...

@@ -21,7 +21,7 @@ Tip: When edited open file in browser to check for errors.
     -->
     <identifier value="tagtree.qdaaddon.de.fordes.qdatreehelper"/>
 
-    <version value="0.1.0"/>
+    <version value="0.2.1"/>
 
     <platform value="all"/>
 
@@ -63,14 +63,11 @@ Tip: When edited open file in browser to check for errors.
         <name lang="en">qdacodehelper</name>
     </display-name>
 
-    <!--
-    AddOn icon
-    Directory: images
+
     <icon>
-        <default xlink:href="images/icon.png" />
-        <high-contrast xlink:href="images/icon.png" />
+        <default xlink:href="image/icon.png" />
+        <high-contrast xlink:href="image/icon.png" />
     </icon>
-    -->
 
     <!--
     Short extension description in the Extension Manager dialog

@@ -22,7 +22,7 @@ from functools import reduce
 
 import re
 
-from ui.Panel1_UI import Panel1_UI
+from ui.qdaTreePanel_UI import qdaTreePanel_UI
 
 # ----------------- helpers for API_inspector tools -----------------
 
@@ -45,19 +45,20 @@ from ui.Panel1_UI import Panel1_UI
 #        raise _rtex("\nBasic library Xray is not installed", uno.getComponentContext())
 
 
-class Panel1(Panel1_UI,XActionListener, XSelectionChangeListener):
+class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
     '''
     Class documentation...
     '''
     
     def __init__(self, panelWin):
-        Panel1_UI.__init__(self, panelWin)
+        qdaTreePanel_UI.__init__(self, panelWin)
 
         # document
         self.ctx = uno.getComponentContext()
         self.smgr = self.ctx.ServiceManager
         self.desktop = self.smgr.createInstanceWithContext("com.sun.star.frame.Desktop", self.ctx)
         self.document = self.desktop.getCurrentComponent()
+        self.updateTree() # this, seemingly, does not work
 
     def getHeight(self):
         return self.DialogContainer.Size.Height
@@ -68,6 +69,11 @@ class Panel1(Panel1_UI,XActionListener, XSelectionChangeListener):
 
     def updateTree(self): #why is self implicitly passed?
         def convertAbstractToUiTree(abstractTree,parent,gui_treemodel):
+            print(abstractTree)
+            if not abstractTree: #if abstract tree is empty, show some into to the user
+                branch = treemodel.createNode("if you create comments write a #hashtag, they will be listed here", False)
+                parent.appendChild(branch)
+                
             for item in abstractTree: #TODO: Item is sometimes the string "children"
                 
                 if "children" in item and item["children"]:
@@ -270,7 +276,7 @@ def sortTreeRecursive(treeList):
 #-- RUN PANEL----#
 #----------------#
 
-def Run_Panel1(*args):
+def Run_qdaTreePanel(*args):
     """
     Intended to be used in a development environment only
     Copy this file in src dir and run with (Tools - Macros - MyMacros)
@@ -280,7 +286,7 @@ def Run_Panel1(*args):
     sm = ctx.ServiceManager
     dialog = sm.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", ctx)
 
-    app = Panel1(dialog)
+    app = qdaTreePanel(dialog)
     app.showDialog()
 
-g_exportedScripts = Run_Panel1,
+g_exportedScripts = Run_qdaTreePanel,

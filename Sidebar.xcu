@@ -11,7 +11,7 @@
 	
 			<node oor:name="ExampleSidebarDeck" oor:op="replace">
 	    	    <prop oor:name="Title" oor:type="xs:string">
-            	   	<value xml:lang="en-US">My New Deck</value>
+            	   	<value xml:lang="en-US">QDA Tag Tree</value>
 	            </prop>
 	            <prop oor:name="TitleBarIsOptional" oor:type="xs:boolean">
 			        <value>true</value>
@@ -32,7 +32,7 @@
     	<node oor:name="PanelList">
         	
         	﻿
-            <node oor:name="Panel_Panel1" oor:op="replace">
+            <node oor:name="Panel_qdaTreePanel" oor:op="replace">
 	        	<prop oor:name="Title" oor:type="xs:string">
                 	<value xml:lang="en-US">Tag Tree</value>
             	</prop>
@@ -48,7 +48,7 @@
                 	</value>
             	</prop>
             	<prop oor:name="ImplementationURL" oor:type="xs:string">
-            		<value>private:resource/toolpanel/qdatreehelper/Panel1</value>
+            		<value>private:resource/toolpanel/qdatreehelper/qdaTreePanel</value>
             	</prop>				
             	<prop oor:name="OrderIndex" oor:type="xs:int">
             		<value>700</value>
@@ -57,7 +57,7 @@
             		<value>false</value>
             	</prop>
             	<prop oor:name="DefaultMenuCommand">
-          			<value>tagtree.qdaaddon.de.fordes:Panel1</value>
+          			<value>tagtree.qdaaddon.de.fordes:qdaTreePanel</value>
         		</prop>
             </node>
 
