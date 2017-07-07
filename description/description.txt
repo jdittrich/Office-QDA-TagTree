@@ -1,1 +1,1 @@
-Jand Addon Description Test
+Addon for qualitative data analysis by marking text, using hashtags in comments. Shows tree of tagged text sections in sidebar.
