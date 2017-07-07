@@ -198,7 +198,9 @@ class test(unohelper.Base, XDispatch, XDispatchProvider):
         """
 
         if featureURL.Path == 'Panel1':
-            messageBox(featureURL.Path, 'DefaultMenuCommand', MsgType=MESSAGEBOX, MsgButtons=BUTTONS_OK)
+            #TODO minor: put message into central object instead of code
+            messageBox("Helper for qualitative Research in LibreOffice. Generates a list/tree of #hashtags#subhashtags in comments which can serve as codes and/or markers for memos", 'DefaultMenuCommand', MsgType=MESSAGEBOX, MsgButtons=BUTTONS_OK)
+            # messageBox(featureURL.Path, 'DefaultMenuCommand', MsgType=MESSAGEBOX, MsgButtons=BUTTONS_OK)
 
 
 
