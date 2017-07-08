@@ -77,7 +77,7 @@ class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
             for item in abstractTree: #TODO: Item is sometimes the string "children"
                 
                 if "children" in item and item["children"]:
-                    branch = treemodel.createNode(item['name'], True) 
+                    branch = treemodel.createNode("#"+item['name'][:10], True) #[:n] takes the first n chars of a string (or just leaves it be, if there are less). Alternatives: if-clause or function for it; gain: add "…" to string if shortened 
                 else:
                     branch = treemodel.createNode(item['name'], False) 
                
