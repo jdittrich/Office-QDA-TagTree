@@ -108,6 +108,12 @@ class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
         treeControl.addSelectionChangeListener(self)
         
         self.TreeControl1.DataModel = treemodel
+        
+        toolkit = self.ServiceManager.createInstance("com.sun.star.awt.Toolkit")
+        
+        treeControl.createPeer(toolkit,None)
+        
+        expandAllNodesGuiTree(treeControl.Model.DataModel.Root, treeControl)
 
         # the variable single has been imported by "from com.sun.star.view.SelectionType import SINGLE". Just "SINGLE" (as string) or the corrseponding enumeration number did not work.
         self.TreeControl1.SelectionType = SINGLE
@@ -265,12 +271,30 @@ def sortTreeRecursive(treeList):
     ''' 
     DOES: Sort children lists in a tree by name
     GET: Tree
-    RETURN: Nothing
+    RETURN: Nothing, side effect
     '''
     for item in treeList:
         if "children" in item:
             sortTreeRecursive(item["children"])
     treeList.sort(key=lambda item:item["name"])
+    
+def expandAllNodesGuiTree(root,treeControl):
+    '''
+    DOES: Expand all Nodes in a mutableTreeModel
+    GETS: XTreeNode
+    RETURNS: Nothing, side effect
+    '''
+    for count in range(0,root.ChildCount):
+        child = root.getChildAt(count)
+        
+        if child.ChildCount > 0:
+            treeControl.expandNode(child)
+            expandAllNodesGuiTree(child, treeControl)
+
+        
+    
+    
+
 
 #----------------#
 #-- RUN PANEL----#
