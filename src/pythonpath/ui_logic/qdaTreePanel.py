@@ -119,6 +119,7 @@ class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
         self.TreeControl1.SelectionType = SINGLE
         self.TreeControl1.RootDisplayed = False
 
+        expandAllNodesGuiTree(treeControl.Model.DataModel.Root, treeControl)
     # --------- helpers ---------------------
 
     def messageBox(self, MsgText, MsgTitle, MsgType=MESSAGEBOX, MsgButtons=BUTTONS_OK):
@@ -134,6 +135,7 @@ class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
     def showDialog(self):
         self.DialogContainer.setVisible(True)
         self.DialogContainer.createPeer(self.Toolkit, None)
+        self.updateTree() # can now execute the update (and within expand the nodes) since the peer is set now, and this is needed for expanding nodes (whyever...)
         self.DialogContainer.execute()
 
     # -----------------------------------------------------------
@@ -284,6 +286,8 @@ def expandAllNodesGuiTree(root,treeControl):
     GETS: XTreeNode
     RETURNS: Nothing, side effect
     '''
+
+    # TODO: check if tree control has a peer, if not return None
     for count in range(0,root.ChildCount):
         child = root.getChildAt(count)
         
