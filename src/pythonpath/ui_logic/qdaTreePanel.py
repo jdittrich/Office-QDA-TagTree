@@ -69,7 +69,7 @@ class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
 
     def updateTree(self): #why is self implicitly passed?
         def convertAbstractToUiTree(abstractTree,parent,gui_treemodel):
-            print(abstractTree)
+            
             if not abstractTree: #if abstract tree is empty, show some into to the user
                 branch = treemodel.createNode("if you create comments write a #hashtag, they will be listed here", False)
                 parent.appendChild(branch)
@@ -110,9 +110,7 @@ class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
         self.TreeControl1.DataModel = treemodel
         
         toolkit = self.ServiceManager.createInstance("com.sun.star.awt.Toolkit")
-        
-        treeControl.createPeer(toolkit,None)
-        
+                
         expandAllNodesGuiTree(treeControl.Model.DataModel.Root, treeControl)
 
         # the variable single has been imported by "from com.sun.star.view.SelectionType import SINGLE". Just "SINGLE" (as string) or the corrseponding enumeration number did not work.
@@ -291,7 +289,7 @@ def expandAllNodesGuiTree(root,treeControl):
     for count in range(0,root.ChildCount):
         child = root.getChildAt(count)
         
-        if child.ChildCount > 0:
+        if child.ChildCount > 0 and treeControl.Peer:
             treeControl.expandNode(child)
             expandAllNodesGuiTree(child, treeControl)
 
