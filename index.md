@@ -2,7 +2,7 @@
 
 …Qualitative Data Analysis is not easy. And if you don't want to spend a large amount of money, you are back to very basic methods when you code your data. Many people use word processors for analysis as a wide spread and affordable alternative. 
 
-QDA Tag tree builds on that and enhances [LibreOffice Writer](http://www.libreoffice.org/), a free word processor with a sidebar that allows you to view all your codes (also called *tags* here, since they are written as *#hashtags*).
+QDA Tag tree builds on that and enhances [LibreOffice Writer](http://www.libreoffice.org/) (a free word processor): It adds a sidebar that allows you to view all your codes (also called *tags* here, since they are written as *#hashtags*).
 
 ![Screenshot of the extension; shows LibreOffice comments and a tree view](http://i.imgur.com/7k9Meb6.png)
 
