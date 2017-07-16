@@ -1,12 +1,12 @@
 # QDA Tag Tree for LibreOffice
 
-…Qualitative Data Analysis is not easy. And if you don't want to spend a large amount of money, you are back to very basic methods when you code your data. Many people use word processors for analysis as a wide spread and affordable alternative. 
+…Qualitative Data Analysis is not easy. And if you don't want to spend a large amount of money, you are back to very basic methods when you code your data. Some people [use word processors for analysis](https://www.slideshare.net/jennacondie/working-with-word-for-qualitative-data-analysis) as a wide spread and affordable alternative. 
 
-QDA Tag tree builds on that and enhances [LibreOffice Writer](http://www.libreoffice.org/) (a free word processor): It adds a sidebar that allows you to view all your codes (also called *tags* here, since they are written as *#hashtags*).
+*QDA Tag Tree* builds on that and enhances [LibreOffice Writer](http://www.libreoffice.org/) (a free word processor): It adds a sidebar that allows you to view all your codes (also called *tags* here, since they are written as *#hashtags*).
 
 ![Screenshot of the extension; shows LibreOffice comments and a tree view](http://i.imgur.com/7k9Meb6.png)
 
-The codes are written in the standard comments, so source text and codes can stay separate. 
+The codes are written in the standard comments, so transcribed text and codes can stay separate. 
 
 ## Download and installation
 
@@ -31,7 +31,7 @@ You won’t see anything interesting yet, because you have not coded your data, 
 
 > #fun #analysis 
 
-You can also put other text in it: 
+Other text in comments with the #hashtags works, too: 
 
 > #fun #analysis Note to self: Is fun the right code here? I think we might want to discuss its definition. 
 
@@ -42,7 +42,7 @@ You can also create sub codes that will show as child codes in the tree:
 Which will create a tree-group with text-sections coded with #fun and another tree-group #analysis with a child group #review. This way you can keep the overview. 
 
 
-**Don’t forget to press *update* to, well, update the tag tree.** 
+**Don’t forget to press *update* to update the tag tree.** 
 
 **Review Codes:** If you click on an item in the tree that represents coded text (the ones without a fold/unfold icon and a *#*) you can see the coded text in the upper part of the panel. If "jump to clicked Tag" is checked, it will  scroll the document to the coded text. 
 
