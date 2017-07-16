@@ -33,7 +33,7 @@ You won’t see anything interesting yet, because you have not coded your data, 
 
 You can also put other text in it: 
 
-> #fun #analysis Note to self: Is fun the right code here? I think we might want to discuss it's definition. 
+> #fun #analysis Note to self: Is fun the right code here? I think we might want to discuss its definition. 
 
 You can also create sub codes that will show as child codes in the tree: 
 
