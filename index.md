@@ -8,7 +8,7 @@ QDA Tag tree builds on that and enhances [LibreOffice Writer](http://www.libreof
 
 The codes are written in the standard comments, so source text and codes can stay separate. 
 
-##Download and installation
+## Download and installation
 
 **[🡇 QDA Tag Tree Release](https://github.com/jdittrich/Office-QDA-TagTree/releases/latest)**
 
