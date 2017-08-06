@@ -20,7 +20,11 @@ from com.sun.star.ui import XUIElement, XToolPanel,XSidebarPanel, LayoutSize
 from com.sun.star.frame import XDispatch,XDispatchProvider
 from com.sun.star.ui.UIElementType import TOOLPANEL as UET_TOOLPANEL
 
+from com.sun.star.task import XJobExecutor #for keyboard shortcut activation
+
 from ui_logic.qdaTreePanel import qdaTreePanel
+
+
 
 # ----------------- helpers for API_inspector tools -----------------
 
@@ -62,7 +66,6 @@ class ElementFactory( unohelper.Base, XUIElementFactory):
         self.ctx = ctx
 
     def createUIElement(self, url, args):
-
         try:
             xParentWindow = None
             xFrame = None
@@ -95,10 +98,12 @@ class ElementFactory( unohelper.Base, XUIElementFactory):
             tb()
 
 g_ImplementationHelper = unohelper.ImplementationHelper()
-g_ImplementationHelper.addImplementation(
+
+g_ImplementationHelper.addImplementation( #that seems to add the panel as uno component
         ElementFactory,
         "tagtree.qdaaddon.de.fordes.qdatreehelper",
         ("com.sun.star.task.Job",),)
+
 
 
 class XUIPanel( unohelper.Base,  XSidebarPanel, XUIElement, XToolPanel, XComponent):
@@ -207,6 +212,17 @@ class test(unohelper.Base, XDispatch, XDispatchProvider):
 g_ImplementationHelper.addImplementation(*test.get_imple())
 
 
+class triggerUpdateJob( unohelper.Base, XJobExecutor ):
+    def __init__( self, ctx, app ):
+        self.ctx = ctx
+        self.app = app
+        print("Trigger Init")
+
+    def trigger( self, args ):
+        print("TRiGGeRed")
+        self.app.updateTree()
+
+
 def showPanels(panelWin, url):
     """
     Create a new panel object when the sidebar is initialized
@@ -222,6 +238,14 @@ def showPanels(panelWin, url):
         app = qdaTreePanel(panelWin)
         app.showDialog()
         panel_height = app.getHeight()
+        
+        updateTrigger= triggerUpdateJob(ctx,app)
+        
+        #after panel was created, add access to call it as service
+        g_ImplementationHelper.addImplementation(
+        updateTrigger,
+        "tagtree.qdaaddon.de.fordes.qdatreeappfunctions",
+        ("com.sun.star.task.Job",),)
 
         return panel_height + pos_y
-
+    

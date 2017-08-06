@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="Accelerators"
+	oor:package="org.openoffice.Office">
+	<node oor:name="PrimaryKeys">
+		<node oor:name="Modules">
+			<node oor:name="com.sun.star.text.TextDocument">
+				<node oor:name="L_SHIFT_MOD1" oor:op="replace">
+					<prop oor:name="Command">
+						<value xml:lang="en-US">service:tagtree.qdaaddon.de.fordes.qdatreeappfunctions?trigger</value>
+					</prop>
+				</node>
+			</node>
+		</node>
+	</node>
+</oor:component-data>

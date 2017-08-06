@@ -58,7 +58,7 @@ class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
         self.smgr = self.ctx.ServiceManager
         self.desktop = self.smgr.createInstanceWithContext("com.sun.star.frame.Desktop", self.ctx)
         self.document = self.desktop.getCurrentComponent()
-        self.updateTree() # this, seemingly, does not work
+        self.updateTree() # this, seemingly, does not work TODO?
 
     def getHeight(self):
         return self.DialogContainer.Size.Height

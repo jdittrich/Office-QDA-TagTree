@@ -16,6 +16,8 @@
 	<manifest:file-entry 
 		manifest:media-type="application/vnd.sun.star.configuration-data"
 		manifest:full-path="Sidebar.xcu"/>
+		
+	<manifest:file-entry manifest:full-path="Accelerators.xcu" manifest:media-type="application/vnd.sun.star.configuration-data"/>
 
 	<!-- Extension name in the Extension Manager dialog -->
 	<manifest:file-entry manifest:media-type="application/vnd.sun.star.package-bundle-description"
