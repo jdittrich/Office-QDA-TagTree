@@ -79,7 +79,7 @@ class qdaTreePanel(qdaTreePanel_UI,XActionListener, XSelectionChangeListener):
                 if "children" in item and item["children"]:
                     branch = treemodel.createNode("#"+item['name'], True) #[:n] takes the first n chars of a string (or just leaves it be, if there are less). Alternatives: if-clause or function for it; gain: add "…" to string if shortened 
                 else:
-                    branch = treemodel.createNode(item['name'][:20], False) 
+                    branch = treemodel.createNode(item['name'][:28], False) 
                
                 if "children" in item and item["children"]: #"in" checks for keys existance, "item["children"]"" checks if list is emptry since an empty list is false (https://www.python.org/dev/peps/pep-0008/#programming-recommendations)
                     convertAbstractToUiTree(item["children"],branch, gui_treemodel)
