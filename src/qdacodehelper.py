@@ -118,7 +118,7 @@ class XUIPanel( unohelper.Base,  XSidebarPanel, XUIElement, XToolPanel, XCompone
     # XUIElement
     def getRealInterface(self):
 
-        
+
         if not self.window:
             dialogUrl = "vnd.sun.star.extension://tagtree.qdaaddon.de.fordes.qdatreehelper/empty_dialog.xdl"
             smgr = self.ctx.ServiceManager
@@ -211,41 +211,37 @@ class test(unohelper.Base, XDispatch, XDispatchProvider):
 
 g_ImplementationHelper.addImplementation(*test.get_imple())
 
+#
+class triggerUpdateJob(unohelper.Base, XJobExecutor):
+    app = None  # that will be shared by all instances, so it can be set from some other function
 
-class triggerUpdateJob( unohelper.Base, XJobExecutor ):
-    def __init__( self, ctx, app ):
+    def __init__( self, ctx):
         self.ctx = ctx
-        self.app = app
-        print("Trigger Init")
 
-    def trigger( self, args ):
-        print("TRiGGeRed")
+    def trigger( self, args ): # method of XJobExecutor 
         self.app.updateTree()
-
 
 def showPanels(panelWin, url):
     """
     Create a new panel object when the sidebar is initialized
     or whenever a panel becomes visible
     """
-    
+
     ctx = uno.getComponentContext()
     # url is set in Sidebar.xcu
     if url == 'private:resource/toolpanel/qdatreehelper/qdaTreePanel':
-        
         pos_y = 20
 
         app = qdaTreePanel(panelWin)
         app.showDialog()
         panel_height = app.getHeight()
-        
-        updateTrigger= triggerUpdateJob(ctx,app)
-        
-        #after panel was created, add access to call it as service
-        g_ImplementationHelper.addImplementation(
-        updateTrigger,
-        "tagtree.qdaaddon.de.fordes.qdatreeappfunctions",
-        ("com.sun.star.task.Job",),)
+
+        triggerUpdateJob.app = app #set var on class dynamically. Class should be a singleton then, I think...
 
         return panel_height + pos_y
-    
+
+# add a service to trigger it from a keyboard shortcut
+g_ImplementationHelper.addImplementation(
+triggerUpdateJob,
+"tagtree.qdaaddon.de.fordes.qdatreeappfunctions",
+("com.sun.star.task.Job",),)
