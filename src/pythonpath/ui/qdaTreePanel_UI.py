@@ -42,7 +42,7 @@ class qdaTreePanel_UI(unohelper.Base, XActionListener, XJobExecutor):
         self.DialogContainer.setModel(self.DialogModel)
         self.DialogModel.Moveable = True
         self.DialogModel.PositionY = "147"
-        self.DialogModel.Height = 350
+        self.DialogModel.Height = 380
         self.DialogModel.PositionX = "176"
         self.DialogModel.Closeable = True
         self.DialogModel.Name = "Dialog1" #change back to tree dialog and see if it works
@@ -106,7 +106,7 @@ class qdaTreePanel_UI(unohelper.Base, XActionListener, XJobExecutor):
         self.TreeControl1.Name = "TreeControl1"
         self.TreeControl1.TabIndex = 2
         self.TreeControl1.PositionX = "2"
-        self.TreeControl1.Height = 260
+        self.TreeControl1.Height = 300
         self.TreeControl1.Width = 140
 
         # inserts the control model into the dialog model
