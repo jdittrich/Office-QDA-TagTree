@@ -1,3 +1,6 @@
+**The Project is currently unmaintained.**
+
+
 A libre office addon that finds comments that have #hashtags in them. It shows all these comments in a tree control in the sidebar (after the user pressed the update button). 
 
 ![Screenshot of the extension; shows Libreoffice comments and a tree view](http://i.imgur.com/7k9Meb6.png)
